@@ -67,6 +67,13 @@ button{
     background: var(--primary-color);
 }
 
+.empty-lists{
+    padding: 24px 0;
+    text-align: center;
+    font-style: italic;
+    color: rgba(255,255,255,0.2);
+}
+
 /* Form CSS */
 
 .form-vertical{

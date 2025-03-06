@@ -6,32 +6,71 @@ import '../css/home.css'
 
 export default function Home() {
 
-    const [input, setInput] = useState();
+    const [inputValue, setInputValue] = useState('');
+    const [lists, setLists] = useState([]);
+
+
+    // to load lists from local storage when page loads
+    useEffect(() => {
+        const storedLists = localStorage.getItem("lists");
+
+        // if the item is stored and not empty, it will load the lists of local storage to storedLists
+        if (storedLists) {
+            setLists(JSON.parse(storedLists));
+        }
+    },
+        // this is dependency array that ensures this affect runs only once when page loads
+        [])
+
 
     const onChangeHandler = (e) => {
-        setInput(e.target.value);
+        setInputValue(e.target.value);
     }
 
-    // to store value in localstorage
+    const onHandleAdd = () => {
+        setLists([...lists,  {text: inputValue, completed: false}]);
+        setInputValue('');
+    }
+
+    // to save lists to local storage
     const onSubmitHandler = (e) => {
         e.preventDefault();
 
-        localStorage.setItem("task", input);
+        onHandleAdd(); // add the lists
+
+        localStorage.setItem("lists", JSON.stringify(lists));
     }
+
+    const onCompletedHandler = (index) => {
+        console.log(index);
+        const updatedLists = lists.map((list, i) =>
+            i === index ? { ...list, completed: !list.completed} : list
+        );
+        setLists(updatedLists);
+        console.log(updatedLists);
+    }
+
+    const onDeleteHandler = (index) => {
+        const updatedLists = lists.filter((_, i) => i !== index);
+        setLists(updatedLists);
+        localStorage.setItem("lists", JSON.stringify(updatedLists));
+    }
+
+
 
 
     return (
         <div className="todo-wrapper">
             <form className="form form-vertical d-flex" onSubmit={onSubmitHandler}>
-                <input className="form-vertical__input" type="text" name="task" onChange={onChangeHandler} required={true} placeholder="Eg: I have to do my homework" />
+                <input className="form-vertical__input" type="text" name="task" value={inputValue} onChange={onChangeHandler} required={true} placeholder="Eg: I have to do my homework" />
                 <button className="form-vertical__button" type="submit">
                     <i className="bi bi-plus-lg"></i>
                 </button>
             </form>
 
-            <TodoLists/>
+            <TodoLists lists={lists} onCompleteHandler={onCompletedHandler} onDeleteHandler={onDeleteHandler} />
 
-            <CompletedLists />
+            <CompletedLists lists={lists} onCompleteHandler={onCompletedHandler} onDeleteHandler={onDeleteHandler}/>
         </div>
     )
 }

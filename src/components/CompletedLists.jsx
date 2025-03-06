@@ -6,7 +6,7 @@ export default function CompletedLists({lists, onCompleteHandler, onDeleteHandle
 
     const checkListsHandler = () => {
         if(completedLists.length === 0){
-            return ("There are no any tasks");
+            return ("All tasks has been completed");
         }
     }
 

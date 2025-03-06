@@ -42,12 +42,10 @@ export default function Home() {
     }
 
     const onCompletedHandler = (index) => {
-        console.log(index);
         const updatedLists = lists.map((list, i) =>
             i === index ? { ...list, completed: !list.completed} : list
         );
         setLists(updatedLists);
-        console.log(updatedLists);
     }
 
     const onDeleteHandler = (index) => {

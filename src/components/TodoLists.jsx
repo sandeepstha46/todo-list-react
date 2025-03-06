@@ -6,7 +6,7 @@ export default function TodoLists ({lists, onCompleteHandler, onDeleteHandler}) 
 
     const checkListsHandler = () => {
         if(todoItems.length === 0){
-            return ("There are no any tasks");
+            return ("There are no any tasks to do");
         }
     }
 

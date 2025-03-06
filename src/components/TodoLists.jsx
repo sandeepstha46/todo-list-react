@@ -6,11 +6,9 @@ export default function TodoLists ({lists, onCompleteHandler, onDeleteHandler}) 
 
     const checkListsHandler = () => {
         if(todoItems.length === 0){
-            return ("You have completed all the tasks");
+            return ("There are no any tasks");
         }
     }
-
-    console.log(todoItems)
 
     return (
         <div className="type-wrapper">
@@ -18,7 +16,7 @@ export default function TodoLists ({lists, onCompleteHandler, onDeleteHandler}) 
                 Tasks to do - {todoItems.length}
             </p>
             <div className="lists-wrapper">
-                <p className="empty-lists">{checkListsHandler()}</p>
+                {todoItems.length > 0 ? null : <p className="empty-lists">{checkListsHandler()}</p>}
                 {todoItems.map((item,index) => (
                     <div className="list d-flex" key={index}>
                         <p className="list-paragraph">
